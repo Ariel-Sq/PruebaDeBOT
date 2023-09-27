@@ -32,7 +32,7 @@ client.on("messageCreate", async (message) => {
       );
       const tokenPrice = response.data.bitcoin.usd;
 
-      message.channel.send(`El precio actual del ${token} es $${tokenPrice}`);
+      message.channel.send(`El precio actual de ${token} es $${tokenPrice}`);
     } catch (error) {
       console.error(`Error al obtener el precio de ${token}: `, error);
     }
