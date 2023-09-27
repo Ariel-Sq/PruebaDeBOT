@@ -1,9 +1,4 @@
-const {
-  Client,
-  GatewayIntentBits,
-  Partials,
-  Collection,
-} = require("discord.js");
+const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const axios = require("axios");
 const config = require("./config.json");
 
@@ -16,14 +11,14 @@ client.setMaxListeners(0);
 
 client
   .login(config.token)
-  .then((result) => {
-    console.log(`${client.user.username} Está online.`);
+  .then(() => {
+    console.log(`${client.user.username} Online.`);
   })
   .catch((err) => {
     console.log(err);
   });
 
-// Evento para escuchar mensajes en el chat
+// Event to listen to messages in the chat
 client.on("messageCreate", async (message) => {
   if (message.content.includes("price of ")) {
     try {
@@ -39,17 +34,3 @@ client.on("messageCreate", async (message) => {
     }
   }
 });
-
-/*const { Client } = require("discord.js");
-const client = new Client({ intents: [3276799] });
-
-const config = require("./config.json");
-
-client.on("messageCreate", async (message) => {
-  if (message.content == "hola") {
-    message.channel.send("Hola");
-  }
-});
-
-client.login(config.token);
-console.log("El bot esta en linea");*/
