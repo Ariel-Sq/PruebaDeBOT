@@ -25,19 +25,17 @@ client
 
 // Evento para escuchar mensajes en el chat
 client.on("messageCreate", async (message) => {
-  // Verificar si el contenido del mensaje es "bt" (sin importar mayúsculas o minúsculas)
-  if (message.content.toLowerCase() === "bt") {
+  if (message.content.includes("price of ")) {
     try {
+      const token = message.content.slice(9);
       const response = await axios.get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+        `https://api.coingecko.com/api/v3/simple/price?ids=${token}&vs_currencies=usd`
       );
+      const tokenPrice = response.data.bitcoin.usd;
 
-      const bitcoinPrecio = response.data.bitcoin.usd;
-
-      // Enviar el precio del Bitcoin como respuesta
-      message.channel.send(`El precio actual del Bitcoin es $${bitcoinPrecio}`);
+      message.channel.send(`El precio actual del ${token} es $${tokenPrice}`);
     } catch (error) {
-      console.error("Error al obtener el precio del Bitcoin:", error);
+      console.error(`Error al obtener el precio de ${token}: `, error);
     }
   }
 });
