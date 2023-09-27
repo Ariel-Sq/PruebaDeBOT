@@ -1,16 +1,20 @@
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const axios = require("axios");
-const config = require("./config.json");
 
 const client = new Client({
   intents: [Object.keys(GatewayIntentBits)],
   partials: [Object.keys(Partials)],
 });
 
-client.setMaxListeners(0);
+const token = process.env.DISCORD_TOKEN;
 
+if (!token) {
+  throw new Error("Discord token not found. Please check your .env file.");
+}
+
+client.setMaxListeners(0);
 client
-  .login(config.token)
+  .login(token)
   .then(() => {
     console.log(`${client.user.username} Online.`);
   })
