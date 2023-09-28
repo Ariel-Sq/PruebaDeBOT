@@ -26,8 +26,8 @@ client
 // Event to listen to messages in the chat
 client.on("messageCreate", async (message) => {
   if (message.content.includes("price of ")) {
+    const token = message.content.slice(9);
     try {
-      const token = message.content.slice(9);
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${token}&vs_currencies=usd`
       );
@@ -36,6 +36,7 @@ client.on("messageCreate", async (message) => {
       message.channel.send(`El precio actual de ${token} es $${tokenPrice}`);
     } catch (error) {
       console.error(`Error al obtener el precio de ${token}: `, error);
+      message.channel.send(`Error al obtener el precio de ${token}`);
     }
   }
 });
