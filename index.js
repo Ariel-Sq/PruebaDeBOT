@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
+require("dotenv").config();
 const axios = require("axios");
 
 const client = new Client({
@@ -30,7 +31,7 @@ client.on("messageCreate", async (message) => {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${token}&vs_currencies=usd`
       );
-      const tokenPrice = response.data.bitcoin.usd;
+      const tokenPrice = response.data[token].usd;
 
       message.channel.send(`El precio actual de ${token} es $${tokenPrice}`);
     } catch (error) {
